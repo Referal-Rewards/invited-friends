@@ -1,89 +1,441 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Instant Referral Rewards - $48+ in Free USDC</title>
+<title>Invited Friends</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@400;500&display=swap">
+
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; background: #0d1117; color: #e6edf3; line-height: 1.6; padding: 20px; }
-  .wrap { max-width: 640px; margin: 0 auto; }
-  h1 { text-align: center; font-size: 1.8em; margin: 20px 0 5px; }
-  .sub { text-align: center; color: #8b949e; margin-bottom: 30px; }
-  .deal { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 24px; margin-bottom: 20px; }
-  .deal h2 { color: #58a6ff; font-size: 1.2em; margin-bottom: 4px; }
-  .badge { display: inline-block; background: #238636; color: #fff; font-weight: 700; padding: 4px 12px; border-radius: 20px; font-size: 0.9em; margin-bottom: 12px; }
-  ol { margin: 12px 0 12px 20px; }
-  li { margin-bottom: 8px; }
-  a { color: #58a6ff; word-break: break-all; }
-  .code { display: inline-block; background: #0d1117; border: 1px dashed #f0883e; color: #f0883e; font-family: monospace; font-size: 1.2em; font-weight: 700; padding: 4px 14px; border-radius: 8px; margin: 4px 0; }
-  .note { color: #8b949e; font-size: 0.9em; border-top: 1px solid #30363d; margin-top: 14px; padding-top: 10px; }
-  .warn { color: #f0883e; }
-  .foot { text-align: center; color: #6e7681; font-size: 0.8em; margin-top: 30px; }
-  .btn { display: block; text-align: center; background: #238636; color: #fff !important; text-decoration: none; font-weight: 700; padding: 14px; border-radius: 10px; margin-top: 14px; font-size: 1.05em; }
+  /* Layout: single-column feed, hero → deal cards → CTA footer */
+  :root {
+    --bg: #0d0f14;
+    --surface: #161920;
+    --surface2: #1e2230;
+    --border: rgba(255,255,255,0.07);
+    --fg: #e8eaf0;
+    --muted: #7a7f94;
+    --accent: #5b7fff;
+    --accent-glow: rgba(91,127,255,0.18);
+    --green: #3ecf8e;
+    --green-bg: rgba(62,207,142,0.10);
+    --gold: #f5c842;
+    --gold-bg: rgba(245,200,66,0.10);
+    --purple: #a855f7;
+    --purple-bg: rgba(168,85,247,0.10);
+    color-scheme: dark;
+  }
+
+  /* This page is deliberately dark-first */
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 0;
+  }
+
+  .page-wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    padding-block: 48px 80px;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    text-align: center;
+    padding-block: 12px 40px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--accent-glow);
+    border: 1px solid rgba(91,127,255,0.3);
+    border-radius: 99px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .hero h1 {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(28px, 6vw, 42px);
+    font-weight: 800;
+    line-height: 1.15;
+    text-wrap: balance;
+    margin-bottom: 14px;
+    background: linear-gradient(135deg, #fff 0%, #a8b4ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 420px;
+    margin: 0 auto 32px;
+    text-wrap: balance;
+  }
+
+  .btn-main {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: #fff;
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 14px 32px;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 24px rgba(91,127,255,0.35);
+  }
+
+  .btn-main:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(91,127,255,0.5);
+  }
+
+  .btn-main svg {
+    width: 16px; height: 16px; flex-shrink: 0;
+  }
+
+  /* ── Section label ── */
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  /* ── Deal cards ── */
+  .deals {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .deal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+
+  .deal:hover {
+    border-color: rgba(255,255,255,0.14);
+  }
+
+  .deal-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 20px 20px 16px;
+  }
+
+  .deal-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .deal-icon.green { background: var(--green-bg); }
+  .deal-icon.gold  { background: var(--gold-bg);  }
+  .deal-icon.purple{ background: var(--purple-bg);}
+
+  .deal-meta { flex: 1; min-width: 0; }
+
+  .deal-name {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1.3;
+  }
+
+  .deal-reward {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .deal-reward strong {
+    font-weight: 700;
+  }
+
+  .deal-reward.green strong { color: var(--green); }
+  .deal-reward.gold  strong { color: var(--gold);  }
+  .deal-reward.purple strong { color: var(--purple); }
+
+  .deal-body {
+    border-top: 1px solid var(--border);
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .step-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .step-num {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--surface2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--fg);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .deal-footer {
+    padding: 0 20px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 4px 10px;
+    border-radius: 99px;
+    border: 1px solid;
+  }
+
+  .tag.free   { color: var(--green);  background: var(--green-bg);  border-color: rgba(62,207,142,0.25); }
+  .tag.crypto { color: var(--accent); background: var(--accent-glow); border-color: rgba(91,127,255,0.3); }
+  .tag.no-kyc { color: var(--gold);   background: var(--gold-bg);   border-color: rgba(245,200,66,0.25); }
+  .tag.quick  { color: var(--purple); background: var(--purple-bg); border-color: rgba(168,85,247,0.25); }
+
+  /* ── Bottom CTA ── */
+  .cta-block {
+    background: linear-gradient(135deg, #1a1f33 0%, #1e1528 100%);
+    border: 1px solid rgba(91,127,255,0.2);
+    border-radius: 20px;
+    padding: 32px 24px;
+    text-align: center;
+  }
+
+  .cta-block h2 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 8px;
+    text-wrap: balance;
+  }
+
+  .cta-block p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+    text-wrap: balance;
+  }
+
+  /* ── Divider ── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .divider span {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  /* ── Stats bar ── */
+  .stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-bottom: 36px;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-val {
+    font-family: 'Sora', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--green), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-lbl {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
 </style>
-</head>
-<body>
-<div class="wrap">
 
-<h1>&#127873; Instant Referral Rewards</h1>
-<p class="sub">Ramp Network $42 USDC &middot; Bitget Wallet $5-20 USDC &middot; TiltRips free $1 pack</p>
+<div class="page-wrap">
 
-<div class="deal">
-  <h2>DEAL 1 &mdash; Ramp Network</h2>
-  <span class="badge">$42 USDC &mdash; paid in USDC directly</span>
-  <ol>
-    <li>Download the Ramp Network app:<br><a href="https://play.google.com/store/apps/details?id=com.rampnetwork.app">https://play.google.com/store/apps/details?id=com.rampnetwork.app</a></li>
-    <li>Sign up and enter invite code <span class="code">8P84M0</span> during registration &mdash; <b class="warn">cannot be added later</b></li>
-    <li>Complete identity verification (KYC)</li>
-    <li>Make a $52 fiat top-up in the app</li>
-  </ol>
-  <div class="note">
-    <b>Cost/catch:</b> the $52 stays yours &mdash; it's a qualifying top-up, not a fee.<br>
-    <b>Who qualifies:</b> new Ramp Network users, 18+, supported regions (works in EU).<br>
-    <b>Expires:</b> no stated end date &mdash; reward pool is limited, first-come first-served.
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-badge">Referral Rewards</div>
+    <h1>Get Paid Just for Joining</h1>
+    <p>Exclusive sign-up bonuses — free crypto, cashback, and more. No experience needed.</p>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-val">$60+</div>
+        <div class="stat-lbl">total available</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">3</div>
+        <div class="stat-lbl">active deals</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">Free</div>
+        <div class="stat-lbl">to claim</div>
+      </div>
+    </div>
+
+    <a href="https://linktr.ee/Invited_Friends" target="_blank" rel="noopener" class="btn-main">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3l5 5-5 5M3 8h10"/></svg>
+      See All Deals
+    </a>
   </div>
-  <a class="btn" href="https://play.google.com/store/apps/details?id=com.rampnetwork.app">GET $42 USDC &mdash; code 8P84M0</a>
-</div>
 
-<div class="deal">
-  <h2>DEAL 2 &mdash; Bitget Wallet (web3)</h2>
-  <span class="badge">$5-20 USDC + FREE virtual card</span>
-  <ol>
-    <li>Open the referral link:<br><a href="https://web3.bitget.com/share/3PQ1hn?inviteCode=8JiP5Axu">https://web3.bitget.com/share/3PQ1hn?inviteCode=8JiP5Axu</a></li>
-    <li>Download Bitget Wallet and create a new wallet (self-custody &mdash; write down your seed phrase)</li>
-    <li>Enter invite code <span class="code">8JiP5Axu</span> during setup</li>
-    <li>Complete KYC (ID + selfie &mdash; approves in minutes)</li>
-    <li>Deposit minimum $5 USDC into the wallet</li>
-    <li>Activate your FREE virtual card &mdash; your deposit moves to the card balance</li>
-    <li>Use it: deposit it to Coinbase, or move it to your bank &mdash; your $5 stays fully spendable, it's not a fee</li>
-  </ol>
-  <div class="note">
-    <b>Cost/catch:</b> the $5 deposit is yours to spend &mdash; you literally move it to your card and can send it to Coinbase or back out.<br>
-    The reward tier ($5-20) depends on which in-app tasks you complete after signup &mdash; more tasks, more USDC.<br>
-    <b>Who qualifies:</b> new Bitget Wallet users, 18+, worldwide.<br>
-    <b>Expires:</b> no stated end date &mdash; reward pools are first-come, first-served.
+  <!-- Deals -->
+  <div class="section-label">Featured Offers</div>
+  <div class="deals">
+
+    <!-- Deal 1: Ramp Network -->
+    <div class="deal">
+      <div class="deal-header">
+        <div class="deal-icon green">💳</div>
+        <div class="deal-meta">
+          <div class="deal-name">Ramp Network</div>
+          <div class="deal-reward green">Earn up to <strong>$42 USDC</strong> bonus</div>
+        </div>
+      </div>
+      <div class="deal-body">
+        <div class="step-row"><span class="step-num">1</span><span>Sign up with the referral link</span></div>
+        <div class="step-row"><span class="step-num">2</span><span>Buy at least $50 in crypto (first purchase)</span></div>
+        <div class="step-row"><span class="step-num">3</span><span>Bonus credited within 7 days</span></div>
+      </div>
+      <div class="deal-footer">
+        <span class="tag crypto">Crypto</span>
+        <span class="tag quick">Fast Payout</span>
+      </div>
+    </div>
+
+    <!-- Deal 2: Bitget Wallet -->
+    <div class="deal">
+      <div class="deal-header">
+        <div class="deal-icon gold">🔑</div>
+        <div class="deal-meta">
+          <div class="deal-name">Bitget Wallet</div>
+          <div class="deal-reward gold">Earn <strong>$5 – $20 USDC</strong> on signup</div>
+        </div>
+      </div>
+      <div class="deal-body">
+        <div class="step-row"><span class="step-num">1</span><span>Download the Bitget Wallet app</span></div>
+        <div class="step-row"><span class="step-num">2</span><span>Create a new wallet using referral link</span></div>
+        <div class="step-row"><span class="step-num">3</span><span>Complete the onboarding tasks</span></div>
+      </div>
+      <div class="deal-footer">
+        <span class="tag free">No Deposit</span>
+        <span class="tag no-kyc">No KYC</span>
+      </div>
+    </div>
+
+    <!-- Deal 3: TiltRips -->
+    <div class="deal">
+      <div class="deal-header">
+        <div class="deal-icon purple">🎁</div>
+        <div class="deal-meta">
+          <div class="deal-name">TiltRips</div>
+          <div class="deal-reward purple">Claim a <strong>free $1 pack</strong></div>
+        </div>
+      </div>
+      <div class="deal-body">
+        <div class="step-row"><span class="step-num">1</span><span>Click the referral link below</span></div>
+        <div class="step-row"><span class="step-num">2</span><span>Register a free account</span></div>
+        <div class="step-row"><span class="step-num">3</span><span>Instant $1 starter pack added to your balance</span></div>
+      </div>
+      <div class="deal-footer">
+        <span class="tag free">100% Free</span>
+        <span class="tag quick">Instant</span>
+      </div>
+    </div>
+
   </div>
-  <a class="btn" href="https://web3.bitget.com/share/3PQ1hn?inviteCode=8JiP5Axu">GET $5-20 USDC + FREE CARD</a>
-</div>
 
-<div class="deal">
-  <h2>DEAL 3 &mdash; Tilt Rips</h2>
-  <span class="badge">Free $1 card pack</span>
-  <ol>
-    <li>Sign up:<br><a href="https://tiltrips.com/r/GY5T7V5O">https://tiltrips.com/r/GY5T7V5O</a><br>Invite Code: <span class="code">GY5T7V5O</span></li>
-    <li>Verify your phone number</li>
-    <li>Claim the free pack</li>
-  </ol>
-  <div class="note">
-    <b>Cost/catch:</b> small but instant &mdash; takes ~3 minutes total.<br>
-    <b>Who qualifies:</b> new users, phone verification required.<br>
-    <b class="warn">Availability:</b> the free pack is only for USA, Canada, UK, Australia and Puerto Rico.
+  <!-- Bottom CTA -->
+  <div class="divider"><span>All Links</span></div>
+
+  <div class="cta-block">
+    <h2>Ready to claim your rewards?</h2>
+    <p>All referral links are in one place. Open them, sign up, and collect your bonus.</p>
+    <a href="https://linktr.ee/Invited_Friends" target="_blank" rel="noopener" class="btn-main">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3l5 5-5 5M3 8h10"/></svg>
+      Open Invited Friends Links
+    </a>
   </div>
-  <a class="btn" href="https://tiltrips.com/r/GY5T7V5O">CLAIM FREE PACK</a>
-</div>
 
-<div class="foot">All rewards go to the official apps &mdash; verify terms in-app.</div>
 </div>
-</body>
-</html>
